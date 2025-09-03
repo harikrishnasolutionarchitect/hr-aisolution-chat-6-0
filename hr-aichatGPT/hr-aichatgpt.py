@@ -17,7 +17,7 @@ st.write("Developed by PALAKILA HARIKRISHNA")
 st.write("Note: This HR-AISOLUTIONS-ChatGPT App uses HR-AISOLUTIONS. Please ensure you have access to YOUR account Should be Authenticate by hr-aisolutions.")
 st.subheader("ChatGPT-6.0-Beta-Version - OpenAI’s most advanced AI model for deep reasoning, multimodal analysis, coding, content synthesis, and personalized planning. Delivers accurate, creative, and context-rich results across complex tasks with unmatched capability.")
 
-#client = OpenAI(api_key="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")
+#client = OpenAI(api_key="")
 client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 # Initialize session variables at the start once
 if 'model' not in st.session_state:
