@@ -279,3 +279,39 @@ else:
         st.experimental_rerun()
 
     # handle message overflow based on the model size
+
+
+
+############ Create a file uploader widget #############
+uploaded_file = st.file_uploader("Choose a file", type=["csv", "txt", "pdf", "png", "jpg"])
+
+if uploaded_file is not None:
+    # Display information about the uploaded file
+    st.write("File uploaded successfully!")
+    st.write(f"File name: {uploaded_file.name}")
+    st.write(f"File type: {uploaded_file.type}")
+    st.write(f"File size: {uploaded_file.size} bytes")
+
+    # Process the uploaded file based on its type
+    if uploaded_file.type == "text/csv":
+        df = pd.read_csv(uploaded_file)
+        st.subheader("CSV Content:")
+        st.dataframe(df)
+    elif uploaded_file.type == "text/plain":
+        string_data = uploaded_file.getvalue().decode("utf-8")
+        st.subheader("Text File Content:")
+        st.text(string_data)
+    elif uploaded_file.type.startswith("image/"):
+        st.subheader("Uploaded Image:")
+        st.image(uploaded_file, caption=uploaded_file.name, use_container_width=True)
+    elif uploaded_file.type == "application/pdf":
+        # For PDFs, you might need a library like pdfplumber to extract content
+        st.subheader("PDF File Uploaded:")
+        st.write("You can use a library like `pdfplumber` to process PDF content.")
+        # Example (requires pdfplumber installed):
+        # import pdfplumber
+        # with pdfplumber.open(uploaded_file) as pdf:
+        #     for page in pdf.pages:
+        #         st.write(page.extract_text())
+else:
+    st.info("Please upload a file.")
