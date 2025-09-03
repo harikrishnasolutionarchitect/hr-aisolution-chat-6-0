@@ -202,4 +202,80 @@ if prompt := st.chat_input("Type your message here..."):
         response = st.write_stream(stream)
     st.session_state['messages'].append({"role": "assistant", "content": response})
 
+
+######## login and signup page ############
+def main():
+    st.title("Login and Signup Page")
+
+    menu = ["Home", "Login", "SignUp"]
+    choice = st.sidebar.selectbox("Menu", menu)
+
+    if choice == "Home":
+        st.subheader("Welcome to the HR-AISOLUTIONS-ChatGPT App")
+        st.write("This is the home page. Please login or sign up to continue.")
+
+    elif choice == "Login":
+        st.subheader("Login Section")
+
+        username = st.sidebar.text_input("User Name")
+        password = st.sidebar.text_input("Password", type='password')
+        if st.sidebar.checkbox("Login"):
+            # Here you can add your authentication logic
+            if username == "admin" and password == "admin":
+                st.success(f"Logged In as {username}")
+                st.info("Go to the Chat section to start chatting.")
+            else:
+                st.warning("Incorrect Username/Password")
+
+    elif choice == "SignUp":
+        st.subheader("Create New Account")
+        new_user = st.text_input("Username")
+        new_password = st.text_input("Password", type='password')
+        if st.button("Signup"):
+            # Here you can add your signup logic
+            st.success(f"Account created for {new_user}")
+            st.info("Go to the Login section to log in.")   
+
+#########login and signup page2 ############
+def login_page():
+    st.title("Login")
+    username = st.text_input("Username")
+    password = st.text_input("Password", type="password")
+    if st.button("Login"):
+        # Implement your authentication logic here (e.g., check against a database)
+        if username == "user" and password == "password": # Example credentials
+            st.success("Logged in successfully!")
+            st.session_state["logged_in"] = True
+        else:
+            st.error("Invalid username or password.")
+
+def signup_page():
+    st.title("Sign Up")
+    new_username = st.text_input("New Username")
+    new_password = st.text_input("New Password", type="password")
+    confirm_password = st.text_input("Confirm Password", type="password")
+    if st.button("Sign Up"):
+        if new_password == confirm_password:
+            # Implement your user creation logic here (e.g., save to a database)
+            st.success("Account created successfully!")
+            st.session_state["logged_in"] = True # Automatically log in after signup
+        else:
+            st.error("Passwords do not match.")
+
+# Main app logic
+if "logged_in" not in st.session_state:
+    st.session_state["logged_in"] = False
+
+if not st.session_state["logged_in"]:
+    col1, col2 = st.columns(2)
+    with col1:
+        login_page()
+    with col2:
+        signup_page()
+else:
+    st.write("Welcome! You are logged in.")
+    if st.button("Logout"):
+        st.session_state["logged_in"] = False
+        st.experimental_rerun()
+
     # handle message overflow based on the model size
